@@ -3368,8 +3368,8 @@ class Gemma3Model(Model):
         self.gguf_writer.add_file_type(self.ftype)
         self.gguf_writer.add_rope_freq_base(hparams.get("rope_theta", 1_000_000.0)) # for global layers
         # both attn_logit_softcapping and final_logit_softcapping are removed in Gemma3
-        assert hparams.get("attn_logit_softcapping")  == None
-        assert hparams.get("final_logit_softcapping") == None
+        assert hparams.get("attn_logit_softcapping")  is None
+        assert hparams.get("final_logit_softcapping") is None
         self.gguf_writer.add_sliding_window(hparams["sliding_window"])
         self.gguf_writer.add_head_count_kv(hparams.get("num_key_value_heads", 4))
         if hparams.get("rope_scaling") is not None:
