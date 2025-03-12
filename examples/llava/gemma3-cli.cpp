@@ -169,7 +169,7 @@ static int eval_image(gemma3_context & ctx, std::string & fname) {
         clip_image_u8_free(img_u8);
         return 1;
     }
-    LOG("Image encoded in %ld ms\n", ggml_time_ms() - t0);
+    LOG("Image encoded in %lld ms\n", ggml_time_ms() - t0);
 
     clip_image_f32_batch_free(&batch_f32);
     clip_image_u8_free(img_u8);
@@ -186,7 +186,7 @@ static int eval_image(gemma3_context & ctx, std::string & fname) {
     ctx.n_past += n_tokens;
     llama_set_causal_attn(ctx.lctx, true);
     eval_text(ctx, "<end_of_image>");
-    LOG("Image decoded in %ld ms\n", ggml_time_ms() - t1);
+    LOG("Image decoded in %lld ms\n", ggml_time_ms() - t1);
     return 0;
 }
 
