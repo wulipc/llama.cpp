@@ -27,29 +27,23 @@ static void acc_f32(const float * x, const float * y, float * dst, const int ne,
 
 template<typename T>
 static void sgn(const T * x, T * dst, const int k, const sycl::nd_item<3> &item_ct1) {
-    const int i = item_ct1.get_global_id(2);
-    if (i >= k) {
-        return;
+    for(auto i = item_ct1.get_global_id(2); i < (const size_t)k; i += item_ct1.get_global_range(2)) {
+        dst[i] = x[i] > static_cast<T>(0.f) ? static_cast<T>(1.f) : ((x[i] < static_cast<T>(0.f) ? static_cast<T>(-1.f) : static_cast<T>(0.f)));
     }
-    dst[i] = x[i] > static_cast<T>(0.f) ? static_cast<T>(1.f) : ((x[i] < static_cast<T>(0.f) ? static_cast<T>(-1.f) : static_cast<T>(0.f)));
 }
 
 template<typename T>
 static void abs_op(const T * x, T * dst, const int k, const sycl::nd_item<3> &item_ct1) {
-    const int i = item_ct1.get_global_id(2);
-    if (i >= k) {
-        return;
+    for(auto i = item_ct1.get_global_id(2); i < (const size_t)k; i += item_ct1.get_global_range(2)) {
+        dst[i] = sycl::fabs(x[i]);
     }
-    dst[i] = sycl::fabs(x[i]);
 }
 
 template<typename T>
 static void elu_op(const T * x, T * dst, const int k, const sycl::nd_item<3> &item_ct1) {
-    const int i = item_ct1.get_global_id(2);
-    if (i >= k) {
-        return;
+    for(auto i = item_ct1.get_global_id(2); i < (const size_t)k; i += item_ct1.get_global_range(2)) {
+        dst[i] = (x[i] > static_cast<T>(0.f)) ? x[i] : sycl::expm1(x[i]);
     }
-    dst[i] = (x[i] > static_cast<T>(0.f)) ? x[i] : sycl::expm1(x[i]);
 }
 
 template<typename T>
