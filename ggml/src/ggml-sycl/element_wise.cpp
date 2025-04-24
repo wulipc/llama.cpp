@@ -363,7 +363,7 @@ static void silu_sycl(const T *x, T *dst, const int k,
 template<typename T>
 static void sgn_sycl(const T * x, T * dst, const int k, queue_ptr stream) {
     // hard code for now
-    const int num_blocks = (k + 256 - 1) / 256;
+    const int num_blocks = ceil_div(k, 256);
     stream->parallel_for(
             sycl::nd_range<3>((sycl::range<3>(1, 1, num_blocks) * sycl::range(1, 1, 256)), sycl::range(1, 1, 256)), [=](sycl::nd_item<3> item_ct1) {
             sgn(x, dst, k, item_ct1);
@@ -373,7 +373,7 @@ static void sgn_sycl(const T * x, T * dst, const int k, queue_ptr stream) {
 template<typename T>
 static void abs_sycl(const T * x, T * dst, const int k, queue_ptr stream) {
     // hard code for now
-    const int num_blocks = (k + 256 - 1) / 256;
+    const int num_blocks = ceil_div(k, 256);
     stream->parallel_for(
             sycl::nd_range<3>((sycl::range<3>(1, 1, num_blocks) * sycl::range<3>(1, 1, 256)), sycl::range<3>(1, 1, 256)), [=](sycl::nd_item<3> item_ct1) {
             abs_op(x, dst, k, item_ct1);
@@ -384,7 +384,7 @@ static void abs_sycl(const T * x, T * dst, const int k, queue_ptr stream) {
 template<typename T>
 static void elu_sycl(const T * x, T * dst, const int k, queue_ptr stream) {
     // hard code for now
-    const int num_blocks = (k + 256 - 1) / 256;
+    const int num_blocks = ceil_div(k, 256);
     stream->parallel_for(
             sycl::nd_range<3>((sycl::range<3>(1, 1, num_blocks) * sycl::range<3>(1, 1, 256)), sycl::range<3>(1, 1, 256)), [=](sycl::nd_item<3> item_ct1) {
             elu_op(x, dst, k, item_ct1);
