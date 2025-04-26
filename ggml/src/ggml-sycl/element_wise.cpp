@@ -1,10 +1,6 @@
 #include "common.hpp"
 #include "ggml.h"
 #include "element_wise.hpp"
-#include <sycl/detail/builtins/builtins.hpp>
-#include <sycl/nd_item.hpp>
-#include <sycl/nd_range.hpp>
-#include <sycl/range.hpp>
 
 static void acc_f32(const float * x, const float * y, float * dst, const int ne,
     const int ne10, const int ne11, const int ne12,
